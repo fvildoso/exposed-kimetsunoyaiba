@@ -6,6 +6,7 @@ import java.util.*
 
 fun main() {
     println("hola hola")
+    println("esto es solo una prueba")
 
     val connectionProps = Properties()
     connectionProps.put("user", "root")
