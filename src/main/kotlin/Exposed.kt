@@ -1,7 +1,6 @@
-import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.javatime.CurrentDateTime
 import org.jetbrains.exposed.sql.javatime.datetime
-import org.jetbrains.exposed.sql.transactions.transaction
 
 //objetos de las tablas que tenemos
 
@@ -25,5 +24,5 @@ object CazadoresAtaques : Table() {
     val id_cazador_ataque = integer("id_cazador_ataque")
     val id_cazador = integer("id_cazador") references Cazadores.id_cazador
     val id_ataque = integer("id_ataque") references Ataques.id_ataque
-    override val primaryKey = PrimaryKey(id_ataque)
+    override val primaryKey = PrimaryKey(id_cazador_ataque)
 }
