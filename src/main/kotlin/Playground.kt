@@ -1,6 +1,4 @@
 import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.javatime.CurrentDateTime
-import org.jetbrains.exposed.sql.javatime.datetime
 import org.jetbrains.exposed.sql.transactions.transaction
 
 fun main() {
@@ -31,8 +29,8 @@ fun main() {
         Cazadores.select{Cazadores.nombre like "Pipe%"}.forEach { cazador ->
             exposedLogger.info(cazador[Cazadores.nombre])
             exposedLogger.info(cazador[Cazadores.birthday].toString())
-            exposedLogger.info(cazador[Cazadores.rango].toString())
-            exposedLogger.info(cazador[Cazadores.pais_origen].toString())
+            exposedLogger.info(cazador[Cazadores.rango])
+            exposedLogger.info(cazador[Cazadores.pais_origen])
         }
     }
 }
