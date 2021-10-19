@@ -42,8 +42,6 @@ fun main() {
             .filter { cazador ->
                 cazador[Cazadores.id_cazador] <= 10 //solo aceptamos las id que son menores o iguales a 10
             }
-
-        //pasamos a lista la seleccion anterior
         val prueba2 = test.toList()
         println(prueba2)
         println(prueba2[0][Cazadores.id_cazador])
