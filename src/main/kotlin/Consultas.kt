@@ -1,6 +1,7 @@
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.javatime.year
 import org.jetbrains.exposed.sql.transactions.transaction
+import kotlin.math.E
 
 fun main() {
     Database.connect(
@@ -135,5 +136,39 @@ fun main() {
                 return@map it
             }
         exposedLogger.info(vista.toString())
+
+
+        exposedLogger.info("----------------------------------")
+        exposedLogger.info("")
+        exposedLogger.info("Extra2. Stefano")
+        var max = 0
+        var id = 1
+        val res2 = DetalleEnfrentamientos
+            .leftJoin(
+                Enfrentamientos,
+                { DetalleEnfrentamientos.id_enfrentamiento },
+                { Enfrentamientos.id_enfrentamiento })
+            .slice(
+                DetalleEnfrentamientos.id_enfrentamiento,
+                DetalleEnfrentamientos.id_cazador.countDistinct(),
+                DetalleEnfrentamientos.id_demonio.countDistinct()
+            )
+            .select { Enfrentamientos.fecha.year() eq 2021 }
+            .groupBy(DetalleEnfrentamientos.id_enfrentamiento)
+            .forEach {
+                println(it)
+
+                val cantidadParticipantes = it[DetalleEnfrentamientos.id_cazador.countDistinct()] +
+                        it[DetalleEnfrentamientos.id_demonio.countDistinct()]
+                val id_enfrentamiento = it[DetalleEnfrentamientos.id_enfrentamiento]
+                if (max < cantidadParticipantes) {
+                    max = cantidadParticipantes.toInt()
+                    id = id_enfrentamiento
+                }
+//                exposedLogger.info("ID enfrentamiento " + id.toString())
+//                exposedLogger.info("Cantidad de participantes " + max.toString())
+            }
+        exposedLogger.info("ID enfrentamiento " + id.toString())
+        exposedLogger.info("Cantidad de participantes " + max.toString())
     }
 }
