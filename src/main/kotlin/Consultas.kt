@@ -1,4 +1,5 @@
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.javatime.year
 import org.jetbrains.exposed.sql.transactions.transaction
 
 fun main() {
@@ -18,7 +19,7 @@ fun main() {
 
         exposedLogger.info("----------------------------------")
         exposedLogger.info("")
-        exposedLogger.info("2. Entrentamiento con mayor cantidad de involucrados el 2021")
+        exposedLogger.info("2. Enfrentamiento con mayor cantidad de involucrados el 2021")
         val personasEnfretamiento = mutableMapOf<Int, MutableList<String>>()
         (DetalleEnfrentamientos innerJoin Enfrentamientos)
             .slice(
@@ -27,7 +28,7 @@ fun main() {
                 Enfrentamientos.id_enfrentamiento,
                 Enfrentamientos.fecha
             )
-            .select { Enfrentamientos.fecha.greaterEq("2021-01-01 00:00:00") }
+            .select { Enfrentamientos.fecha.year().eq(2021) }
             .orderBy(Enfrentamientos.id_enfrentamiento to SortOrder.DESC)
             .forEach {
                 println(it)
