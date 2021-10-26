@@ -1,7 +1,6 @@
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.javatime.year
 import org.jetbrains.exposed.sql.transactions.transaction
-import kotlin.math.E
 
 fun main() {
     Database.connect(
@@ -98,8 +97,8 @@ fun main() {
             .having { DetalleEnfrentamientos.estado_demonio like "vivo" }
             .orderBy(Demonios.id_demonio.count() to SortOrder.DESC)
             .map {
-                if (it[Demonios.nombre].contains("uno")) {
-                    it[Demonios.nombre] = "Barby"
+                if (it[Demonios.nombre].contains("Barby")) {
+                    it[Demonios.nombre] = "Nezuko"
                 }
                 return@map it
             }
@@ -140,14 +139,14 @@ fun main() {
 
         exposedLogger.info("----------------------------------")
         exposedLogger.info("")
-        exposedLogger.info("Extra2. Stefano")
+        exposedLogger.info("Extra2. Stefano (consulta 2)")
         var max = 0
         var id = 1
-        val res2 = DetalleEnfrentamientos
+        DetalleEnfrentamientos
             .leftJoin(
                 Enfrentamientos,
-                { DetalleEnfrentamientos.id_enfrentamiento },
-                { Enfrentamientos.id_enfrentamiento })
+                { id_enfrentamiento },
+                { id_enfrentamiento })
             .slice(
                 DetalleEnfrentamientos.id_enfrentamiento,
                 DetalleEnfrentamientos.id_cazador.countDistinct(),
