@@ -38,12 +38,29 @@ fun main() {
         }
 
         exposedLogger.info("3. Pruebas durante la clase")
-        val test = Cazadores.slice(Cazadores.id_cazador).selectAll() //podría ser mejor usar un filtro en la query, depende del caso
+        val test = Cazadores.slice(Cazadores.id_cazador)
+            .selectAll() //podría ser mejor usar un filtro en la query, depende del caso
             .filter { cazador ->
                 cazador[Cazadores.id_cazador] <= 10 //solo aceptamos las id que son menores o iguales a 10
             }
         val prueba2 = test.toList()
         println(prueba2)
         println(prueba2[0][Cazadores.id_cazador])
+
+        exposedLogger.info("4. Subquery")
+        val subQuery = Cazadores
+            .selectAll()
+            .orderBy(Cazadores.id_cazador to SortOrder.ASC)
+            .limit(2)
+            .alias("cualquiercosa")
+
+        val unCazador = subQuery
+            .slice(subQuery[Cazadores.id_cazador])
+            .selectAll()
+            .limit(1)
+
+        unCazador.forEach {
+            println(it)
+        }
     }
 }

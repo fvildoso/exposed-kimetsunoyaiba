@@ -4,6 +4,7 @@ import Cazadores.id_cazador
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.kohsuke.randname.RandomNameGenerator
+import java.time.LocalDateTime
 
 
 fun main() {
@@ -39,6 +40,7 @@ fun main() {
                 row[nombre] = rnd.next().toString()
                 row[rango] = "El mejor"
                 row[pais_origen] = "Chile"
+                row[birthday] = LocalDateTime.parse("2007-12-03T10:15:30")
             }
         }
 

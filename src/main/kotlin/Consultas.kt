@@ -37,15 +37,15 @@ fun main() {
                 personasEnfretamiento
                     .putIfAbsent(
                         it[Enfrentamientos.id_enfrentamiento],
-                        mutableListOf("Cazador#" + it[DetalleEnfrentamientos.id_cazador])
-                    )?.add("Cazador#" + it[DetalleEnfrentamientos.id_cazador])
+                        mutableListOf("Cazador#${it[DetalleEnfrentamientos.id_cazador]}")
+                    )?.add("Cazador#${it[DetalleEnfrentamientos.id_cazador]}")
 
                 //agregamos demonios
                 personasEnfretamiento
                     .putIfAbsent(
                         it[Enfrentamientos.id_enfrentamiento],
-                        mutableListOf("Demonio#" + it[DetalleEnfrentamientos.id_demonio])
-                    )?.add("Demonio#" + it[DetalleEnfrentamientos.id_demonio])
+                        mutableListOf("Demonio#${it[DetalleEnfrentamientos.id_demonio]}")
+                    )?.add("Demonio#${it[DetalleEnfrentamientos.id_demonio]}")
 
                 //limpiamos duplicados
                 personasEnfretamiento[it[Enfrentamientos.id_enfrentamiento]] =
@@ -159,15 +159,30 @@ fun main() {
 
                 val cantidadParticipantes = it[DetalleEnfrentamientos.id_cazador.countDistinct()] +
                         it[DetalleEnfrentamientos.id_demonio.countDistinct()]
-                val id_enfrentamiento = it[DetalleEnfrentamientos.id_enfrentamiento]
+                val idEnfrentamiento = it[DetalleEnfrentamientos.id_enfrentamiento]
                 if (max < cantidadParticipantes) {
                     max = cantidadParticipantes.toInt()
-                    id = id_enfrentamiento
+                    id = idEnfrentamiento
                 }
 //                exposedLogger.info("ID enfrentamiento " + id.toString())
 //                exposedLogger.info("Cantidad de participantes " + max.toString())
             }
-        exposedLogger.info("ID enfrentamiento " + id.toString())
-        exposedLogger.info("Cantidad de participantes " + max.toString())
+        exposedLogger.info("ID enfrentamiento $id")
+        exposedLogger.info("Cantidad de participantes $max")
+
+        exposedLogger.info("----------------------------------")
+        exposedLogger.info("")
+        exposedLogger.info("Extra3. Random")
+        val cazadorRandom = Cazadores
+            .slice(
+                Cazadores.id_cazador,
+                Cazadores.nombre
+            )
+            .selectAll()
+            .map { return@map it }
+            .random()
+        exposedLogger.info(cazadorRandom.toString())
+
+        val lista = listOf("a","b",1).random()
     }
 }
