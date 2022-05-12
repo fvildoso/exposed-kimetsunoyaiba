@@ -1,6 +1,6 @@
-
 import Ataques.id_ataque
 import Cazadores.id_cazador
+import io.github.cdimascio.dotenv.dotenv
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.kohsuke.randname.RandomNameGenerator
@@ -8,11 +8,15 @@ import java.time.LocalDateTime
 
 
 fun main() {
+
+    //variables de entorno del .env
+    val dotenv = dotenv()
+
     Database.connect(
-        "jdbc:mariadb://localhost:3306/cofradia",
+        dotenv["DATABASE_URL"],
         "org.mariadb.jdbc.Driver",
-        "root",
-        "local"
+        dotenv["DATABASE_USER"],
+        dotenv["DATABASE_PASS"]
     )
 
     //nombres random
