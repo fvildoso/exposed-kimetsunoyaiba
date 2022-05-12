@@ -1,13 +1,17 @@
+import io.github.cdimascio.dotenv.dotenv
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.javatime.year
 import org.jetbrains.exposed.sql.transactions.transaction
 
 fun main() {
+    //variables de entorno del .env
+    val dotenv = dotenv()
+
     Database.connect(
-        "jdbc:mariadb://localhost:3306/cofradia",
+        dotenv["DATABASE_URL"],
         "org.mariadb.jdbc.Driver",
-        "root",
-        "local"
+        dotenv["DATABASE_USER"],
+        dotenv["DATABASE_PASS"]
     )
 
     transaction {
@@ -68,7 +72,7 @@ fun main() {
                 Cazadores.nombre,
                 Ataques.id_ataque.count()
             )
-            .select { (Cazadores.nombre like "%pi%") or (Cazadores.nombre like "%jiro%") }
+            .select { (Cazadores.nombre like "%milk%") or (Cazadores.nombre like "%test 1%") }
             .groupBy(Ataques.id_ataque)
             .orderBy(Ataques.id_ataque.count() to SortOrder.DESC)
             .filter {
